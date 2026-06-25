@@ -18,5 +18,23 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+  thread-db:
+    image: docker.io/library/postgres:16-alpine
+    container_name: thread-service-db
+    environment:
+      POSTGRES_USER: thread_service_admin
+      POSTGRES_PASSWORD: thread_service_pwd
+      POSTGRES_DB: thread_db
+    ports:
+      - "5434:5432"
+    volumes:
+      - ~/Desktop/projects/guftar/volumes/thread_db_data:/var/lib/postgresql/data:Z
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U thread_service_admin -d thread_db" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 volumes:
   user_db_data:
+  thread_db_data:

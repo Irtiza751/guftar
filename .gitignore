@@ -39,4 +39,4 @@ build/
 .DS_Store
 
 # docker/podman containers
-/volumes
+volumes/*
