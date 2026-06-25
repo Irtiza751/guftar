@@ -1,0 +1,17 @@
+server:
+  port: 9090
+spring:
+  application:
+    name: user-service
+  # Connection credentials and location
+  datasource:
+    url: jdbc:postgresql://localhost:5433/user_db
+    username: "user_service_admin"
+    password: "user_service_pwd"
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
