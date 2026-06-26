@@ -23,7 +23,6 @@ public class Thread {
     @EqualsAndHashCode.Include
     private Long id;
 
-    @EqualsAndHashCode.Include
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
@@ -48,4 +47,20 @@ public class Thread {
     private OffsetDateTime createdAt;
     @UpdateTimestamp
     private OffsetDateTime updatedAt;
+
+    public void addThreadMedia(ThreadMedia threadMedia) {
+        if(medias.isEmpty()) {
+            medias = new ArrayList<>();
+        }
+        medias.add(threadMedia);
+        threadMedia.setThread(this);
+    }
+
+    public void addChildThread(Thread childThread) {
+        if(threads.isEmpty()) {
+            threads = new ArrayList<>();
+        }
+        threads.add(childThread);
+        childThread.setParent(this);
+    }
 }

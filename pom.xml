@@ -19,6 +19,7 @@
     <modules>
         <module>user-service</module>
         <module>thread-service</module>
+        <module>common</module>
     </modules>
 
     <properties>
@@ -34,6 +35,11 @@
                 <artifactId>postgresql</artifactId>
                 <version>${postgresql-driver.version}</version>
                 <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.arbor</groupId>
+                <artifactId>common</artifactId>
+                <version>${project.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
