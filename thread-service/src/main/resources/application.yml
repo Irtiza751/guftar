@@ -1,0 +1,15 @@
+server:
+  port: 9091
+spring:
+  application:
+    name: thread-service
+  datasource:
+    url: jdbc:postgresql://localhost:5434/thread_db
+    username: thread_service_admin
+    password: thread_service_pwd
+    dricer-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
