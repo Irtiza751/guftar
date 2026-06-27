@@ -13,8 +13,8 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -78,7 +78,8 @@ public class DefaultThreadService implements ThreadService {
 
     @Override
     public SuccessResponse delete(Long id) {
-        return null;
+        threadRepository.deleteById(id);
+        return new SuccessResponse(HttpStatus.OK.name(), "Thread with id: " + id + " has been deleted");
     }
 
     @Override

@@ -20,7 +20,12 @@ import java.time.OffsetDateTime;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_seq_gen")
+    @SequenceGenerator(
+            name = "user_id_seq_gen",
+            sequenceName = "user_id_seq",
+            allocationSize = 1
+    )
     private Long id;
 
     @Column(nullable = false, unique = true)
