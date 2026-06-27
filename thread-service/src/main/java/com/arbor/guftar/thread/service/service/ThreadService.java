@@ -13,5 +13,5 @@ public interface ThreadService {
     PaginatedResponse<ThreadResponseDto> findByUserId(Long userId, Pageable pageable);
     SuccessResponse update(Long id);
     SuccessResponse delete(Long id);
-    PaginatedResponse<ThreadResponseDto> findAll();
+    PaginatedResponse<ThreadResponseDto> findAll(Pageable pageable);
 }

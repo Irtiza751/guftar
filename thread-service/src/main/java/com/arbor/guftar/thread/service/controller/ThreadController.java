@@ -26,8 +26,8 @@ public class ThreadController {
     }
 
     @GetMapping
-    public ResponseEntity<PaginatedResponse<ThreadResponseDto>> findAll() {
-        return ResponseEntity.ok(threadService.findAll());
+    public ResponseEntity<PaginatedResponse<ThreadResponseDto>> findAll(Pageable pageable) {
+        return ResponseEntity.ok(threadService.findAll(pageable));
     }
 
     @GetMapping("/detail/{id}")

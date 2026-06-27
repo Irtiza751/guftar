@@ -18,6 +18,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Primary
 @Service
 @RequiredArgsConstructor
@@ -29,14 +31,15 @@ public class DefaultThreadService implements ThreadService {
     @Override
     public ThreadResponseDto create(CreateThreadRequest threadRequest) {
         Thread thread = Thread.builder().content(threadRequest.content()).userId(threadRequest.userId()).build();
-        if (threadRequest.threadMediaDto() != null) {
-            ThreadMedia threadMedia = ThreadMedia.builder()
-                    .url(threadRequest.threadMediaDto().url())
-                    .position(threadRequest.threadMediaDto().position())
-                    .type(threadRequest.threadMediaDto().type())
-                    .build();
+        if (threadRequest.medias() != null && !threadRequest.medias().isEmpty()) {
+            List<ThreadMedia> threadMediaList = threadRequest.medias().stream().map(threadMediaDto -> ThreadMedia.builder()
+                            .url(threadMediaDto.url())
+                            .position(threadMediaDto.position() == null ? 0 : threadMediaDto.position())
+                            .type(threadMediaDto.type())
+                            .build())
+                    .toList();
 
-            thread.addThreadMedia(threadMedia);
+            thread.addThreadMedia(threadMediaList);
         }
 
         if (threadRequest.parentId() != null) {
@@ -79,8 +82,7 @@ public class DefaultThreadService implements ThreadService {
     }
 
     @Override
-    public PaginatedResponse<ThreadResponseDto> findAll() {
-        Pageable pageable = PageRequest.of(0, 10);
+    public PaginatedResponse<ThreadResponseDto> findAll(Pageable pageable) {
         Page<ThreadResponseDto> threads = threadRepository.findAll(pageable)
                 .map(this::mapThreadToThreadResponseDto);
 
@@ -104,9 +106,12 @@ public class DefaultThreadService implements ThreadService {
                         .url(threadMedia.getUrl())
                         .type(threadMedia.getType())
                         .position(threadMedia.getPosition())
+                        .threadId(threadMedia.getId())
                         .createAt(threadMedia.getCreatedAt())
                         .updatedAt(threadMedia.getUpdatedAt())
                         .build()).toList() : null)
+                .createdAt(thread.getCreatedAt())
+                .updatedAt(thread.getUpdatedAt())
                 .build();
     }
 }

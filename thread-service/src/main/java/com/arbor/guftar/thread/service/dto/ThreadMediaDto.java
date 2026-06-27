@@ -9,9 +9,5 @@ public record ThreadMediaDto(
         String url,
         @NotNull(message = "Media type is required field")
         MediaType type,
-        @NotNull(message = "Thread id is required field")
-        Long threadId,
         Integer position
-) {
-
-}
+) { }

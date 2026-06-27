@@ -11,6 +11,7 @@ public record ThreadMediaResponseDto (
         String url,
         MediaType type,
         Integer position,
+        Long threadId,
         OffsetDateTime createAt,
         OffsetDateTime updatedAt
 ) {

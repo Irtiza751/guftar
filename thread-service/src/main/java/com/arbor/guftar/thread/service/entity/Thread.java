@@ -19,7 +19,12 @@ import java.util.List;
 public class Thread {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "thread_id_seq_gen")
+    @SequenceGenerator(
+            name = "thread_id_seq_gen",
+            sequenceName = "thread_id_seq",
+            allocationSize = 1
+    )
     @EqualsAndHashCode.Include
     private Long id;
 
@@ -49,17 +54,18 @@ public class Thread {
     private OffsetDateTime updatedAt;
 
     public void addThreadMedia(ThreadMedia threadMedia) {
-        if(medias.isEmpty()) {
-            medias = new ArrayList<>();
-        }
         medias.add(threadMedia);
         threadMedia.setThread(this);
     }
 
-    public void addChildThread(Thread childThread) {
-        if(threads.isEmpty()) {
-            threads = new ArrayList<>();
+    public void addThreadMedia(@NonNull List<ThreadMedia> threadMedias) {
+        medias = threadMedias;
+        for (ThreadMedia media : threadMedias) {
+            media.setThread(this);
         }
+    }
+
+    public void addChildThread(Thread childThread) {
         threads.add(childThread);
         childThread.setParent(this);
     }

@@ -17,9 +17,14 @@ import java.time.OffsetDateTime;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class ThreadMedia {
 
-    @EqualsAndHashCode.Include
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "thread_media_seq_gen")
+    @SequenceGenerator(
+            name = "thread_media_seq_gen",
+            sequenceName = "thread_media_seq",
+            allocationSize = 1
+    )
+    @EqualsAndHashCode.Include
     private Long id;
 
     @EqualsAndHashCode.Include
