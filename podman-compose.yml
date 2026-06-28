@@ -11,7 +11,7 @@ services:
     ports:
       - "5433:5432"
     volumes:
-      - ~/Desktop/projects/guftar/volumes/user_db_data:/var/lib/postgresql/data:Z
+      - ./volumes/user_db_data:/var/lib/postgresql/data:Z
     restart: unless-stopped
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U user_service_admin -d user_db" ]
@@ -28,7 +28,7 @@ services:
     ports:
       - "5434:5432"
     volumes:
-      - ~/Desktop/projects/guftar/volumes/thread_db_data:/var/lib/postgresql/data:Z
+      - ./volumes/thread_db_data:/var/lib/postgresql/data:Z
     restart: unless-stopped
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U thread_service_admin -d thread_db" ]

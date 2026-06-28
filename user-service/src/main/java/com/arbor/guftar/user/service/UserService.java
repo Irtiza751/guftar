@@ -54,15 +54,7 @@ public class UserService {
         Page<UserResponse> pagedUsers = userRepository.findAll(pageable)
                 .map(userResponseMapper::mapUserToUserResponse);
 
-        return PaginatedResponse.<UserResponse>builder()
-                .data(pagedUsers.getContent())
-                .currentPage(pagedUsers.getNumber())
-                .totalPages(pagedUsers.getTotalPages())
-                .pageSize(pagedUsers.getSize())
-                .hasNext(pagedUsers.hasNext())
-                .hasPrevious(pagedUsers.hasPrevious())
-                .totalItems(pagedUsers.getTotalElements())
-                .build();
+        return PaginatedResponse.from(pagedUsers);
     }
 
     public UserResponse findById(Long id) {
