@@ -30,23 +30,30 @@ public class User {
 
     @Column(nullable = false, unique = true)
     private String username;
+
     @Column(nullable = false, unique = true)
     private String email;
+
     @Column(columnDefinition = "TEXT")
     private String password;
-    @Column(length = 20)
+
+    @Column(length = 20, unique = true)
     private String phoneNo;
+
     @Column(columnDefinition = "TEXT")
     private String bio;
+
     private String imageUrl;
     private Boolean isVerifiedEmail = false;
     private Boolean isVerifiedPhone = false;
     private Boolean isPrivateAccount = false;
+
     @Enumerated(EnumType.STRING)
     private AuthProvider authMethod = AuthProvider.LOCAL;
+
     @CreationTimestamp
     private OffsetDateTime createdAt;
+
     @UpdateTimestamp
     private OffsetDateTime updatedAt;
-
 }

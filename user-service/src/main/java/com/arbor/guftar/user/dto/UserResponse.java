@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.OffsetDateTime;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,5 +15,8 @@ public class UserResponse {
     private Long id;
     private String username;
     private String email;
-//    private String phoneNo;
+    private String bio;
+    private String imageUrl;
+    private OffsetDateTime createdAt;
+    private OffsetDateTime updatedAt;
 }
