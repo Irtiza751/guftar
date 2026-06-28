@@ -21,10 +21,12 @@ public class UserResponseMapper {
     }
 
     public void updateUserDtoFields(UpdateUserDto userRequest, User user) {
-        if(userRequest.username() != null && !userRequest.username().isBlank()) {
+        if (userRequest.username() != null && !userRequest.username().isBlank()) {
             user.setUsername(userRequest.username());
-        } else if(userRequest.bio() != null && !userRequest.bio().isBlank()) {
+        } else if (userRequest.bio() != null && !userRequest.bio().isBlank()) {
             user.setBio(userRequest.bio());
+        } else if (userRequest.imageUrl() != null && !userRequest.imageUrl().isBlank()) {
+            user.setImageUrl(userRequest.imageUrl());
         }
     }
 }
