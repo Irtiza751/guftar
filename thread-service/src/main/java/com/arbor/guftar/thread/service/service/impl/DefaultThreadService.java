@@ -3,6 +3,7 @@ package com.arbor.guftar.thread.service.service.impl;
 import com.arbor.guftar.common.dto.PaginatedResponse;
 import com.arbor.guftar.common.dto.SuccessResponse;
 import com.arbor.guftar.thread.service.dto.CreateThreadRequest;
+import com.arbor.guftar.thread.service.dto.ThreadMediaDto;
 import com.arbor.guftar.thread.service.dto.ThreadResponseDto;
 import com.arbor.guftar.thread.service.dto.UpdateThreadRequest;
 import com.arbor.guftar.thread.service.entity.Thread;
@@ -20,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Primary
@@ -34,13 +36,24 @@ public class DefaultThreadService implements ThreadService {
     @Override
     public ThreadResponseDto create(CreateThreadRequest threadRequest) {
         Thread thread = Thread.builder().content(threadRequest.content()).userId(threadRequest.userId()).build();
+        int meidaPosition = 0;
         if (threadRequest.medias() != null && !threadRequest.medias().isEmpty()) {
-            List<ThreadMedia> threadMediaList = threadRequest.medias().stream().map(threadMediaDto -> ThreadMedia.builder()
-                            .url(threadMediaDto.url())
-                            .position(threadMediaDto.position() == null ? 0 : threadMediaDto.position())
-                            .type(threadMediaDto.type())
-                            .build())
-                    .toList();
+            List<ThreadMedia> threadMediaList = new ArrayList<>();
+            for (ThreadMediaDto mediaDto : threadRequest.medias()) {
+                if(mediaDto.position() != null && mediaDto.position() >= threadRequest.medias().size()) {
+                    throw new IllegalArgumentException("Position cannot be larger than total medias");
+                }
+
+                ThreadMedia threadMedia = ThreadMedia.builder()
+                        .url(mediaDto.url())
+                        .position(mediaDto.position() == null ? meidaPosition : mediaDto.position())
+                        .type(mediaDto.type())
+                        .build();
+
+                if(mediaDto.position() == null) meidaPosition++;
+
+                threadMediaList.add(threadMedia);
+            }
 
             thread.addThreadMedia(threadMediaList);
         }
