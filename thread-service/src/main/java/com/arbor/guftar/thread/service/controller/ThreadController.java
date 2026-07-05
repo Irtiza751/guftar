@@ -4,10 +4,12 @@ import com.arbor.guftar.common.dto.PaginatedResponse;
 import com.arbor.guftar.common.dto.SuccessResponse;
 import com.arbor.guftar.thread.service.dto.CreateThreadRequest;
 import com.arbor.guftar.thread.service.dto.ThreadResponseDto;
+import com.arbor.guftar.thread.service.dto.UpdateThreadRequest;
 import com.arbor.guftar.thread.service.service.ThreadService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +28,7 @@ public class ThreadController {
     }
 
     @GetMapping
-    public ResponseEntity<PaginatedResponse<ThreadResponseDto>> findAll(Pageable pageable) {
+    public ResponseEntity<PaginatedResponse<ThreadResponseDto>> findAll(@PageableDefault Pageable pageable) {
         return ResponseEntity.ok(threadService.findAll(pageable));
     }
 
@@ -41,8 +43,9 @@ public class ThreadController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SuccessResponse> update(@PathVariable Long id) {
-        return ResponseEntity.ok(threadService.update(id));
+    public ResponseEntity<ThreadResponseDto> update(@PathVariable Long id,
+                                                  @Valid @RequestBody UpdateThreadRequest updateThreadRequest) {
+        return ResponseEntity.ok(threadService.update(id, updateThreadRequest));
     }
 
     @DeleteMapping("/{id}")
