@@ -1,0 +1,25 @@
+server:
+  port: 8888
+  shutdown: graceful
+spring:
+  main:
+    banner-mode: off
+  profiles:
+    active: dev
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/Irtiza751/guftar-config-properties.git
+          username: ${GIT_USERNAME}
+          password: ${GIT_SECRET_TOKEN}
+          default-label: main
+          search-paths:
+            - dev
+            - staging
+            - prod
+logging:
+  level:
+    root: INFO

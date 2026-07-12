@@ -40,3 +40,6 @@ build/
 
 # docker/podman containers
 volumes/*
+
+# .env
+*.env
