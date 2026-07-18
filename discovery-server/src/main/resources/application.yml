@@ -1,0 +1,15 @@
+server:
+  shutdown: graceful
+  port: 8765
+logging:
+  level:
+    root: INFO
+spring:
+  main:
+    banner-mode: off
+  application:
+    name: discovery-server
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
