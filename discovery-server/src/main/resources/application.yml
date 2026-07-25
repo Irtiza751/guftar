@@ -1,6 +1,6 @@
 server:
   shutdown: graceful
-  port: 8765
+  port: 8761
 logging:
   level:
     root: INFO
